@@ -11,11 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
+import com.example.study.ui.view.TareasViewModel
 import com.example.study.ui.view.ViewNuevaTarea
 import com.example.study.ui.view.ViewNuevoModulo
 import com.example.study.ui.view.ViewPrincipal
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Study() {
     val navController = rememberNavController()
-    //val study2ViewModel: Study2ViewModel = hiltViewModel()
+    val tareasViewModel = TareasViewModel()
 
     NavHost(
         navController = navController,
@@ -53,12 +55,12 @@ fun Study() {
         //composable(Routes.ViewRegistro.route) { ViewRegistro(navController) }
         composable(Routes.ViewTareasPendientes.route) {
             ViewTareasPendientes(
-                navController//,
-                //study2ViewModel
+                navController,
+                tareasViewModel
             )
         }
         composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController) }
-        composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController/*, study2ViewModel*/) }
+        composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, tareasViewModel) }
 //        composable(Routes.ViewDashboard.route) { ViewDashboard() }
 //        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(study2ViewModel) }
 //        composable(

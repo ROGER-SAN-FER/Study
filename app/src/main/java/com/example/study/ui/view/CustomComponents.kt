@@ -1,6 +1,5 @@
 package com.example.study.ui.view
 
-import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -340,20 +339,21 @@ fun InsertarBotonElevadoImagen(
  * @param context El contexto de la aplicación.
  * @param vencimiento El valor actual de la fecha y hora seleccionada.
  * @param clickable La función lambda que se llama cuando se hace clic en el campo de texto. Recibe la fecha y hora seleccionada como argumento.
- * @param studyViewModel El ViewModel que se utiliza para seleccionar la fecha y hora.
+ * @param tareasViewModel El ViewModel que se utiliza para seleccionar la fecha y hora.
  */
 @Composable
 fun InsertarTextFieldCalendario(
     context: Context,
     vencimiento: String,
     clickable: (String) -> Unit,
-    //studyViewModel: Study2ViewModel
+    tareasViewModel: TareasViewModel
 ) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .wrapContentWidth()
+            .wrapContentHeight()
             .clickable {
-                //studyViewModel.seleccionarFechaHora(context) { clickable(it) }
+                tareasViewModel.seleccionarFechaHora(context) { clickable(it) }
             }
     ) {
         TextField(

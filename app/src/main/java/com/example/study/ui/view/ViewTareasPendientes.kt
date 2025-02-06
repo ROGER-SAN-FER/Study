@@ -56,7 +56,7 @@ import kotlin.collections.sortedByDescending
 @Composable
 fun ViewTareasPendientes(
     navController: NavHostController,
-    //study2ViewModel: com.example.study2.ui.viewmodel.Study2ViewModel
+    tareasViewModel: TareasViewModel
 ) {
     //val modulos by com.example.study2.ui.viewmodel.Study2ViewModel.modulos.collectAsState()
     //val tareas = State.value
@@ -174,8 +174,8 @@ fun ViewTareasPendientes(
 fun VistaPreviaViewCentral() {
     StudyTheme {
         val navController = rememberNavController()
-        //val study2ViewModel: com.example.study2.ui.viewmodel.Study2ViewModel =
+        val tareasViewModel: TareasViewModel = TareasViewModel()
             //androidx.hilt.navigation.compose.hiltViewModel()
-        ViewTareasPendientes(navController/*, study2ViewModel*/)
+        ViewTareasPendientes(navController, tareasViewModel)
     }
 }

@@ -70,4 +70,13 @@ dependencies {
     // Para íconos extendidos
     implementation ("androidx.compose.material:material-icons-extended:1.5.1")
 
+    //Para usar Flow con ViewModel
+    // Dependencia de ViewModel para trabajar con Kotlin Coroutines
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1") // Asegúrate de usar la última versión
+
+    // Dependencia de Kotlin Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
 }
