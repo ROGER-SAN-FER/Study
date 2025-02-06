@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Study" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Study" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Hace que la ventana sea translúcida -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- Establece el ícono animado de la splash screen a transparente -->
+        <item name="android:windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+        <!-- Establece la duración de la animación a 0 para que no se reproduzca ninguna transición -->
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+    </style>
 </resources>

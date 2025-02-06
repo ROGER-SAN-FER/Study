@@ -123,6 +123,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dotlottie.dlplayer.Mode
@@ -902,12 +904,12 @@ private fun BotonDesplegar(
  * @param navController Controlador de navegación para manejar la navegación de la aplicación.
  */
 @Composable
-fun MyFAB(/*navController: NavHostController*/) {
+fun MyFAB(navController: NavHostController) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
     FloatingActionButton(
         onClick = {
-            //navController.navigate("ViewNuevaTarea")
+            navController.navigate("ViewNuevaTarea")
         },
         shape = RoundedCornerShape(50),
         modifier = Modifier
@@ -938,7 +940,7 @@ fun MyFAB(/*navController: NavHostController*/) {
  */
 @Composable
 fun MyModalDrawer(
-    //navController: NavHostController,
+    navController: NavHostController,
     drawerState: DrawerState,
     contenido: @Composable () -> Unit
 ) {
@@ -979,19 +981,19 @@ fun MyModalDrawer(
                             selected = false,
                             icon = item.first,
                             onClick = {
-//                                coroutineScope.launch {
-//                                    when (item.second) {
-//                                        "Nuevo Módulo" -> navController.navigate("ViewNuevoModulo")
+                                coroutineScope.launch {
+                                    when (item.second) {
+                                        "Nuevo Módulo" -> navController.navigate("ViewNuevoModulo")
 //                                        "Eliminar Módulo" -> navController.navigate("ViewEliminarModulo")
-//                                        "Nueva Tarea" -> navController.navigate("ViewNuevaTarea")
-//                                        "Tareas Pendientes" -> navController.navigate("ViewTareasPendientes")
+                                        "Nueva Tarea" -> navController.navigate("ViewNuevaTarea")
+                                        "Tareas Pendientes" -> navController.navigate("ViewTareasPendientes")
 //                                        "Dashboard" -> navController.navigate("ViewDashboard")
 //                                        //"Prueba" -> navController.navigate("Prueba")
-//                                    }
+                                    }
 //                                    drawerState.apply {
 //                                        if (isClosed) open() else close()
 //                                    }
-//                                }
+                                }
                             }
                         )//NavigationDrawerItem
                         HorizontalDivider(Modifier.padding(horizontal = 8.dp))
@@ -1136,7 +1138,7 @@ fun NotificacionAnimada() {
 @Composable
 fun MyTopAppBarCenterImage(
     drawerState: DrawerState,//Crear el parámetro de estado Drawer
-    //navController: NavController
+    navController: NavController
 ) {
     //val activity = (LocalContext.current as? Activity)
     val corutina = rememberCoroutineScope()
