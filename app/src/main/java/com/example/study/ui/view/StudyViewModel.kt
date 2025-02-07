@@ -7,7 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.study.data.local.ModulosDatabase
 import com.example.study.data.local.entity.Modulo
+import com.example.study.data.local.entity.Tarea
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -18,10 +24,49 @@ import javax.inject.Inject
 @HiltViewModel
 class StudyViewModel @Inject constructor(private val database: ModulosDatabase) :  ViewModel() {
 
+    // Flujos privados (mutable) y públicos (inmutables)
+    private val _modulosFlow = MutableStateFlow<List<Modulo>>(emptyList())
+    val modulosFlow: StateFlow<List<Modulo>> = _modulosFlow.asStateFlow()
+
+    private val _tareasFlow = MutableStateFlow<List<Tarea>>(emptyList())
+    val tareasFlow: StateFlow<List<Tarea>> = _tareasFlow.asStateFlow()
+
+    // Se cargan los datos al inicializar el ViewModel
+    init {
+        viewModelScope.launch {
+            // Consultas a la BD (suspend)
+            val modulosList = database.modulosTareasDao().obtenerTodosModulos()
+            val tareasList = database.modulosTareasDao().obtenerTodasTareas()
+
+            // Asignamos las listas a los flows
+            _modulosFlow.value = modulosList
+            _tareasFlow.value = tareasList
+        }
+    }
+
+    fun cargarModulos(){
+        viewModelScope.launch{
+            database.modulosTareasDao().obtenerTodosModulos()
+            val modulosList = database.modulosTareasDao().obtenerTodosModulos()
+            _modulosFlow.value = modulosList
+        }
+    }
 
     fun insertarModulo(modulo: Modulo) {
         viewModelScope.launch{
             database.modulosTareasDao().insertarModulo(modulo)
+            // Una vez insertado, puedes refrescar la lista si quieres
+            val modulosList = database.modulosTareasDao().obtenerTodosModulos()
+            _modulosFlow.value = modulosList
+        }
+    }
+
+    fun insertarTarea(tarea: Tarea){
+        viewModelScope.launch{
+            database.modulosTareasDao().insertarTarea(tarea)
+            // Una vez insertado, refrescamos también la lista de tareas
+            val tareasList = database.modulosTareasDao().obtenerTodasTareas()
+            _tareasFlow.value = tareasList
         }
     }
 

@@ -127,7 +127,7 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dotlottie.dlplayer.Mode
-import com.example.study.data.model.Modulo
+//import com.example.study.data.model.Modulo
 //import androidx.navigation.NavController
 //import androidx.navigation.NavHostController
 //import coil.compose.AsyncImage
@@ -145,6 +145,7 @@ import kotlinx.coroutines.launch
 import kotlin.collections.forEach
 import kotlin.math.roundToInt
 import com.example.study.R
+import com.example.study.data.local.entity.Modulo
 import com.example.study.data.model.Tarea
 
 /**

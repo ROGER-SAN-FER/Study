@@ -17,8 +17,10 @@ import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,9 +31,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 //import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.study.data.local.entity.Modulo
+import com.example.study.data.local.entity.Tarea
 import com.example.study.ui.theme.StudyTheme
 
 //import com.example.study2.ui.theme.StudyTheme
@@ -50,17 +55,17 @@ fun ViewNuevaTarea(
     studyViewModel: StudyViewModel,
     modifier: Modifier = Modifier
 ) {
-    //val modulos by studyViewModel.modulos.collectAsState()
-    //var moduloSeleccionado by remember { mutableStateOf<com.example.study2.model.Modulo?>(null) }
+    val modulos by studyViewModel.modulosFlow.collectAsState()
+    var moduloSeleccionado by remember { mutableStateOf<Modulo?>(null) }
     var tarea by rememberSaveable { mutableStateOf("") }
     var vencimiento by rememberSaveable { mutableStateOf("") }
     var detalle by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
 
 
-//    LaunchedEffect(Unit) {
-//        com.example.study2.ui.viewmodel.Study2ViewModel.cargarModulos()
-//    }
+    LaunchedEffect(Unit) {
+        studyViewModel.cargarModulos()
+    }
 
     Scaffold(
         bottomBar = {
@@ -89,13 +94,13 @@ fun ViewNuevaTarea(
                 )
 
 
-                /*MyExposedDropDownMenuParaNuevaTarea(
+                MyExposedDropDownMenuParaNuevaTarea(
                     listaModulos = modulos,
                     onModuloSeleccionado = { modulo ->
                         moduloSeleccionado = modulo
                     },
                     modifier = Modifier.padding(bottom = 28.dp)
-                )*/
+                )
 
                 InsertarTextFieldPersonalizado(
                     estado = tarea,
@@ -132,14 +137,16 @@ fun ViewNuevaTarea(
                     text = "AGREGAR",
                     icono = Icons.Default.Add,
                     onClick = {
-//                        com.example.study2.ui.viewmodel.Study2ViewModel.agregarTarea(
-//                            nombreTarea = tarea,
-//                            fechaVencimiento = vencimiento,
-//                            detalles = detalle,
-//                            completado = false,
-//                            modulo = moduloSeleccionado!!
-//                        )
-//                        NavController.navigate("ViewTareasPendientes")
+                        studyViewModel.insertarTarea(
+                            tarea = Tarea(
+                                nombreTarea = tarea,
+                                fechaVencimiento = vencimiento,
+                                detalles = detalle,
+                                completado = false,
+                                moduloId = moduloSeleccionado!!.id
+                            )
+                        )
+                        navController.navigate("ViewTareasPendientes")
                     },
                     modifier = Modifier
                         .padding(bottom = 24.dp)
