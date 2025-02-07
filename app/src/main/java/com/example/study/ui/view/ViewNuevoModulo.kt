@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 //import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.room.DatabaseConfiguration
@@ -49,7 +49,7 @@ import kotlin.text.toIntOrNull
 @Composable
 fun ViewNuevoModulo(
     navController: NavHostController,
-    database: ModulosDatabase,
+    studyViewModel: StudyViewModel,
     modifier: Modifier = Modifier
 ) {
     //val study2ViewModel: com.example.study2.ui.viewmodel.Study2ViewModel =
@@ -139,6 +139,14 @@ fun ViewNuevoModulo(
                     } else {
                         "https://www.peru.travel/Contenido/Uploads/llamas_637662916836413647.jpg"
                     }
+                    studyViewModel.insertarModulo(
+                        Modulo(
+                            nombre = modulo,
+                            horas = horas,
+                            imagen = imagen,
+                            prioridad = prioridad
+                        )
+                    )
 //                    Study2ViewModel.guardarModulo(
 //                        modulo,
 //                        horas,
@@ -169,34 +177,8 @@ fun ViewNuevoModulo(
 fun VistaPreviaViewNuevoModulo() {
     StudyTheme {
         val navController = rememberNavController()
+        val studyViewModel: StudyViewModel = hiltViewModel()
         // Implementación fake de ModulosDatabase para el preview:
-        val fakeDatabase = object : ModulosDatabase() {
-            override fun modulosTareasDao(): ModulosTareasDao {
-                return object : ModulosTareasDao {
-                    override suspend fun obtenerTodosModulos(): List<Modulo> = emptyList()
-                    override suspend fun insertarModulo(modulo: Modulo) { }
-                    override suspend fun eliminarModulo(modulo: Modulo) { }
-
-                    override suspend fun obtenerTodasTareas(): List<Tarea> = emptyList()
-                    override suspend fun insertarTarea(tarea: Tarea) { }
-                    override suspend fun actualizarTarea(tarea: Tarea) { }
-                    override suspend fun eliminarTarea(tarea: Tarea) { }
-                }
-            }
-
-            override fun clearAllTables() {
-                TODO("Not yet implemented")
-            }
-
-            override fun createInvalidationTracker(): InvalidationTracker {
-                TODO("Not yet implemented")
-            }
-
-            override fun createOpenHelper(config: DatabaseConfiguration): SupportSQLiteOpenHelper {
-                TODO("Not yet implemented")
-            }
-        }
-
-        ViewNuevoModulo(navController, fakeDatabase)
+        ViewNuevoModulo(navController, studyViewModel)
     }
 }

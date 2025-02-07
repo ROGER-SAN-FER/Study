@@ -4,17 +4,25 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.study.data.local.ModulosDatabase
 import com.example.study.data.local.entity.Modulo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
+import javax.inject.Inject
 
-class TareasViewModel: ViewModel() {
+@HiltViewModel
+class StudyViewModel @Inject constructor(private val database: ModulosDatabase) :  ViewModel() {
 
 
     fun insertarModulo(modulo: Modulo) {
-
+        viewModelScope.launch{
+            database.modulosTareasDao().insertarModulo(modulo)
+        }
     }
 
 

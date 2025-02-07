@@ -12,5 +12,4 @@ data class Modulo(
     @ColumnInfo(name = "horas")val horas: Int,
     @ColumnInfo(name = "imagen")val imagen: String,
     @ColumnInfo(name = "prioridad")val prioridad: Int,
-    @ColumnInfo(name = "tareas")val tareas: List<Tarea> = emptyList()
 )

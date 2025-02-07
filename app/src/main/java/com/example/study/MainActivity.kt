@@ -3,37 +3,31 @@ package com.example.study
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.study.data.local.ModulosDatabase
 import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
-import com.example.study.ui.view.TareasViewModel
+import com.example.study.ui.view.StudyViewModel
 import com.example.study.ui.view.ViewNuevaTarea
 import com.example.study.ui.view.ViewNuevoModulo
 import com.example.study.ui.view.ViewPrincipal
 import com.example.study.ui.view.ViewTareasPendientes
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private lateinit var database: ModulosDatabase
+    //private lateinit var database: ModulosDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-            database = ModulosDatabase.getDatabase(this)
+            //database = ModulosDatabase.getDatabase(this)
             StudyTheme {
-                Study(database)
+                Study(/*database*/)
             }
         }
     }
@@ -46,10 +40,10 @@ class MainActivity : ComponentActivity() {
  * @param study2ViewModel El ViewModel que proporciona los datos a las diferentes pantallas.
  */
 @Composable
-fun Study(database: ModulosDatabase) {
+fun Study(/*database: ModulosDatabase*/) {
     //val context = LocalContext.current
     val navController = rememberNavController()
-    val tareasViewModel = TareasViewModel()
+    val studyViewModel: StudyViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -61,11 +55,11 @@ fun Study(database: ModulosDatabase) {
         composable(Routes.ViewTareasPendientes.route) {
             ViewTareasPendientes(
                 navController,
-                tareasViewModel
+                studyViewModel
             )
         }
-        composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController, database) }
-        composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, tareasViewModel) }
+        composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController, studyViewModel) }
+        composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, studyViewModel) }
 //        composable(Routes.ViewDashboard.route) { ViewDashboard() }
 //        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(study2ViewModel) }
 //        composable(

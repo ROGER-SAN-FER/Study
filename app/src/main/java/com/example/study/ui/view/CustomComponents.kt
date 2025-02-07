@@ -339,21 +339,21 @@ fun InsertarBotonElevadoImagen(
  * @param context El contexto de la aplicación.
  * @param vencimiento El valor actual de la fecha y hora seleccionada.
  * @param clickable La función lambda que se llama cuando se hace clic en el campo de texto. Recibe la fecha y hora seleccionada como argumento.
- * @param tareasViewModel El ViewModel que se utiliza para seleccionar la fecha y hora.
+ * @param studyViewModel El ViewModel que se utiliza para seleccionar la fecha y hora.
  */
 @Composable
 fun InsertarTextFieldCalendario(
     context: Context,
     vencimiento: String,
     clickable: (String) -> Unit,
-    tareasViewModel: TareasViewModel
+    studyViewModel: StudyViewModel
 ) {
     Box(
         modifier = Modifier
             .wrapContentWidth()
             .wrapContentHeight()
             .clickable {
-                tareasViewModel.seleccionarFechaHora(context) { clickable(it) }
+                studyViewModel.seleccionarFechaHora(context) { clickable(it) }
             }
     ) {
         TextField(

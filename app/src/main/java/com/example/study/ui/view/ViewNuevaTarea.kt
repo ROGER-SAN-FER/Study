@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 //import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -40,13 +41,13 @@ import com.example.study.ui.theme.StudyTheme
  * Un composable que representa la pantalla para agregar una nueva tarea.
  *
  * @param navController El NavHostController para la navegación.
- * @param tareasViewModel El ViewModel que se utiliza para gestionar las tareas y los módulos.
+ * @param studyViewModel El ViewModel que se utiliza para gestionar las tareas y los módulos.
  * @param modifier El modificador que se aplica a la pantalla.
  */
 @Composable
 fun ViewNuevaTarea(
     navController: NavHostController,
-    tareasViewModel: TareasViewModel,
+    studyViewModel: StudyViewModel,
     modifier: Modifier = Modifier
 ) {
     //val modulos by studyViewModel.modulos.collectAsState()
@@ -112,7 +113,7 @@ fun ViewNuevaTarea(
                     context,
                     vencimiento,
                     { vencimiento = it },
-                    tareasViewModel
+                    studyViewModel
                 )
 
                 InsertarTextFieldPersonalizado(
@@ -166,8 +167,8 @@ fun ViewNuevaTarea(
 fun VistaPreviaViewNuevaTarea() {
     StudyTheme {
         val navController = rememberNavController()
-        val tareasViewModel: TareasViewModel = TareasViewModel()// =
+        val studyViewModel: StudyViewModel = hiltViewModel()
         //    androidx.hilt.navigation.compose.hiltViewModel()
-        ViewNuevaTarea(navController, tareasViewModel = tareasViewModel)
+        ViewNuevaTarea(navController, studyViewModel = studyViewModel)
     }
 }
