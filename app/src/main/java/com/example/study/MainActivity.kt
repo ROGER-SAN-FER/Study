@@ -10,11 +10,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.study.data.local.ModulosDatabase
 import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
 import com.example.study.ui.view.TareasViewModel
@@ -24,12 +26,14 @@ import com.example.study.ui.view.ViewPrincipal
 import com.example.study.ui.view.ViewTareasPendientes
 
 class MainActivity : ComponentActivity() {
+    private lateinit var database: ModulosDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
+            database = ModulosDatabase.getDatabase(this)
             StudyTheme {
-                Study()
+                Study(database)
             }
         }
     }
@@ -42,7 +46,8 @@ class MainActivity : ComponentActivity() {
  * @param study2ViewModel El ViewModel que proporciona los datos a las diferentes pantallas.
  */
 @Composable
-fun Study() {
+fun Study(database: ModulosDatabase) {
+    //val context = LocalContext.current
     val navController = rememberNavController()
     val tareasViewModel = TareasViewModel()
 
@@ -59,7 +64,7 @@ fun Study() {
                 tareasViewModel
             )
         }
-        composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController) }
+        composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController, database) }
         composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, tareasViewModel) }
 //        composable(Routes.ViewDashboard.route) { ViewDashboard() }
 //        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(study2ViewModel) }

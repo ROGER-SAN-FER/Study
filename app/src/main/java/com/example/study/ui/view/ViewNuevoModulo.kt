@@ -27,6 +27,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.DatabaseConfiguration
+import androidx.room.InvalidationTracker
+import androidx.sqlite.db.SupportSQLiteOpenHelper
+import com.example.study.data.local.ModulosDatabase
+import com.example.study.data.local.dao.ModulosTareasDao
+import com.example.study.data.local.entity.Modulo
+import com.example.study.data.local.entity.Tarea
 import com.example.study.ui.theme.StudyTheme
 //import com.example.study2.ui.theme.StudyTheme
 import kotlin.text.isNotEmpty
@@ -40,7 +47,11 @@ import kotlin.text.toIntOrNull
  * @param modifier Modificador opcional para personalización del diseño.
  */
 @Composable
-fun ViewNuevoModulo(navController: NavHostController, modifier: Modifier = Modifier) {
+fun ViewNuevoModulo(
+    navController: NavHostController,
+    database: ModulosDatabase,
+    modifier: Modifier = Modifier
+) {
     //val study2ViewModel: com.example.study2.ui.viewmodel.Study2ViewModel =
    //     androidx.hilt.navigation.compose.hiltViewModel()
     var modulo by rememberSaveable { mutableStateOf("") }
@@ -158,6 +169,34 @@ fun ViewNuevoModulo(navController: NavHostController, modifier: Modifier = Modif
 fun VistaPreviaViewNuevoModulo() {
     StudyTheme {
         val navController = rememberNavController()
-        ViewNuevoModulo(navController)
+        // Implementación fake de ModulosDatabase para el preview:
+        val fakeDatabase = object : ModulosDatabase() {
+            override fun modulosTareasDao(): ModulosTareasDao {
+                return object : ModulosTareasDao {
+                    override suspend fun obtenerTodosModulos(): List<Modulo> = emptyList()
+                    override suspend fun insertarModulo(modulo: Modulo) { }
+                    override suspend fun eliminarModulo(modulo: Modulo) { }
+
+                    override suspend fun obtenerTodasTareas(): List<Tarea> = emptyList()
+                    override suspend fun insertarTarea(tarea: Tarea) { }
+                    override suspend fun actualizarTarea(tarea: Tarea) { }
+                    override suspend fun eliminarTarea(tarea: Tarea) { }
+                }
+            }
+
+            override fun clearAllTables() {
+                TODO("Not yet implemented")
+            }
+
+            override fun createInvalidationTracker(): InvalidationTracker {
+                TODO("Not yet implemented")
+            }
+
+            override fun createOpenHelper(config: DatabaseConfiguration): SupportSQLiteOpenHelper {
+                TODO("Not yet implemented")
+            }
+        }
+
+        ViewNuevoModulo(navController, fakeDatabase)
     }
 }

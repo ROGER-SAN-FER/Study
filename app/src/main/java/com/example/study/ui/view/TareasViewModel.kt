@@ -4,12 +4,18 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import com.example.study.data.local.entity.Modulo
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import java.util.TimeZone
 
 class TareasViewModel: ViewModel() {
+
+
+    fun insertarModulo(modulo: Modulo) {
+
+    }
 
 
     /**

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -78,5 +79,14 @@ dependencies {
     // Dependencia de Kotlin Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    //Room
+    implementation(libs.androidx.room.runtime.v261) // Room runtime
+    kapt(libs.androidx.room.compiler.v261)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    kapt(libs.androidx.room.compiler)
 
 }
