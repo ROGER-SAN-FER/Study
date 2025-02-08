@@ -55,6 +55,8 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
     fun actualizarTarea(tarea: Tarea){
         viewModelScope.launch{
             database.modulosTareasDao().actualizarTarea(tarea)
+            val tareasList = database.modulosTareasDao().obtenerTodasTareas()
+            _tareasFlow.value = tareasList
         }
     }
 
