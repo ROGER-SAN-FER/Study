@@ -44,9 +44,23 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
         }
     }
 
+    fun terminarTarea(tarea: Tarea){
+        viewModelScope.launch{
+            val tareaCompletada = tarea.copy(completado = true)
+            database.modulosTareasDao().actualizarTarea(tareaCompletada)
+            cargarTareas()
+        }
+    }
+
+    fun cargarTareas(){
+        viewModelScope.launch{
+            val tareasList = database.modulosTareasDao().obtenerTodasTareas()
+            _tareasFlow.value = tareasList
+        }
+    }
+
     fun cargarModulos(){
         viewModelScope.launch{
-            database.modulosTareasDao().obtenerTodosModulos()
             val modulosList = database.modulosTareasDao().obtenerTodosModulos()
             _modulosFlow.value = modulosList
         }

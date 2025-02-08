@@ -4,14 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.study.data.local.ModulosDatabase
 import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
 import com.example.study.ui.view.StudyViewModel
+import com.example.study.ui.view.ViewActualizarTarea
 import com.example.study.ui.view.ViewNuevaTarea
 import com.example.study.ui.view.ViewNuevoModulo
 import com.example.study.ui.view.ViewPrincipal
@@ -26,8 +30,11 @@ class MainActivity : ComponentActivity() {
         //enableEdgeToEdge()
         setContent {
             //database = ModulosDatabase.getDatabase(this)
-            StudyTheme {
-                Study(/*database*/)
+            // Proveemos la Activity a toda la jerarquía de Compose
+            CompositionLocalProvider(LocalActivity provides this) {
+                StudyTheme {
+                    Study()
+                }
             }
         }
     }
@@ -62,28 +69,28 @@ fun Study(/*database: ModulosDatabase*/) {
         composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, studyViewModel) }
 //        composable(Routes.ViewDashboard.route) { ViewDashboard() }
 //        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(study2ViewModel) }
-//        composable(
-//            route = "ViewActualizarTarea/{moduloId}/{tareaId}", // Ruta con parámetros
-//            arguments = listOf(
-//                navArgument("moduloId") {
-//                    type = NavType.LongType
-//                }, // Argumento para el ID del módulo
-//                navArgument("tareaId") {
-//                    type = NavType.LongType
-//                } // Argumento para el ID de la tarea
-//            )
-//        ) { backStackEntry ->
-//            val moduloId =
-//                backStackEntry.arguments?.getLong("moduloId") ?: 0L // Obtener ID del módulo
-//            val tareaId =
-//                backStackEntry.arguments?.getLong("tareaId") ?: 0L // Obtener ID de la tarea
-//            ViewActualizarTarea(
-//                navController = navController,
-//                moduloId = moduloId,
-//                study2ViewModel = study2ViewModel,
-//                tareaId = tareaId
-//            )
-//        }
+        composable(
+            route = "ViewActualizarTarea/{moduloId}/{tareaId}", // Ruta con parámetros
+            arguments = listOf(
+                navArgument("moduloId") {
+                    type = NavType.LongType
+                }, // Argumento para el ID del módulo
+                navArgument("tareaId") {
+                    type = NavType.LongType
+                } // Argumento para el ID de la tarea
+            )
+        ) { backStackEntry ->
+            val moduloId =
+                backStackEntry.arguments?.getLong("moduloId") ?: 0L // Obtener ID del módulo
+            val tareaId =
+                backStackEntry.arguments?.getLong("tareaId") ?: 0L // Obtener ID de la tarea
+            ViewActualizarTarea(
+                navController = navController,
+                moduloId = moduloId,
+                studyViewModel = studyViewModel,
+                tareaId = tareaId
+            )
+        }
     }
 }
 

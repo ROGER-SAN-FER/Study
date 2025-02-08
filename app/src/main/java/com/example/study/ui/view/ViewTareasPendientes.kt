@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.study.data.local.entity.Tarea
 import com.example.study.ui.theme.StudyTheme
 //import androidx.hilt.navigation.compose.hiltViewModel
 //import androidx.navigation.compose.rememberNavController
@@ -50,22 +52,22 @@ fun ViewTareasPendientes(
     navController: NavHostController,
     studyViewModel: StudyViewModel
 ) {
-    //val modulos by com.example.study2.ui.viewmodel.Study2ViewModel.modulos.collectAsState()
-    //val tareas = State.value
+    val modulos by studyViewModel.modulosFlow.collectAsState()
+    val tareas by studyViewModel.tareasFlow.collectAsState()
     var filtroSeleccionado by rememberSaveable { mutableStateOf("Ninguno") }
-//    val tareasPendientes = when (filtroSeleccionado) {
-//        "Primeros en vencer" -> tareas.filter { !com.example.study2.model.Tarea.completado }
-//            .sortedBy { com.example.study2.model.Tarea.fechaVencimiento }
-//
-//        "Últimos en vencer" -> tareas.filter { !com.example.study2.model.Tarea.completado }
-//            .sortedByDescending { com.example.study2.model.Tarea.fechaVencimiento }
-//
-//        "Prioridad de Módulo" -> tareas.filter { !com.example.study2.model.Tarea.completado }.sortedByDescending { tarea ->
-//            com.example.study2.model.Modulo.prioridad
-//        }
-//
-//        else -> tareas.filter { !com.example.study2.model.Tarea.completado }
-//    }
+    val tareasPendientes = when (filtroSeleccionado) {
+        "Primeros en vencer" -> tareas.filter { !it.completado }
+            .sortedBy { it.fechaVencimiento }
+
+        "Últimos en vencer" -> tareas.filter { !it.completado }
+            .sortedByDescending { it.fechaVencimiento }
+
+        "Prioridad de Módulo" -> tareas.filter { !it.completado }.sortedByDescending { tarea ->
+            modulos.find { modulo -> modulo.id == tarea.moduloId }?.prioridad
+        }
+
+        else -> tareas.filter { !it.completado }
+    }
     val mydrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     LaunchedEffect(Unit) {
@@ -142,12 +144,12 @@ fun ViewTareasPendientes(
                         style = MaterialTheme.typography.titleLarge
                     )
 
-//                    MyLazyColumn(
-//                        tareas = tareasPendientes,
-//                        study2ViewModel = study2ViewModel,
-//                        navController = navController,
-//                        modulos = modulos
-//                    )
+                    MyLazyColumn(
+                        tareas = tareasPendientes,
+                        studyViewModel = studyViewModel,
+                        navController = navController,
+                        modulos = modulos
+                    )
                 }//Column
             }//Scaffold
         }

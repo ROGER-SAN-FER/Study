@@ -1,5 +1,7 @@
 package com.example.study.ui.view
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -105,7 +107,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.contentDescription
@@ -146,7 +147,11 @@ import kotlin.collections.forEach
 import kotlin.math.roundToInt
 import com.example.study.R
 import com.example.study.data.local.entity.Modulo
-import com.example.study.data.model.Tarea
+import com.example.study.data.local.entity.Tarea
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.platform.LocalContext
+import com.example.study.LocalActivity
+
 
 /**
  * Muestra un título de texto con un tamaño de fuente predefinido.
@@ -717,21 +722,26 @@ fun FilterChipExample(opcion: String, onFilterChange: (String) -> Unit, selected
 @Composable
 fun MyLazyColumn(
     tareas: List<Tarea>,
-    //study2ViewModel: Study2ViewModel,
-    //navController: NavController,
+    studyViewModel: StudyViewModel,
+    navController: NavController,
     modulos: List<Modulo>,
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        /*items(tareas) { tarea ->//'item' puede ser cualquier nombre y representa al tipo de elementos de una lista y a cada elemento
-            val modulo =
-                modulos.find { it.tareas.contains(tarea) }!!// Encuentra el módulo al que pertenece la tarea
-            CardTareaPendiente(tarea, modulo, study2ViewModel, navController)
-        }*/
+        items(tareas) { tarea ->
+            // Encuentra el módulo al que pertenece la tarea comparando tarea.moduloId con modulo.id
+            val modulo = modulos.find { it.id == tarea.moduloId }
+
+            // Podrías hacer un check si es null (solo por seguridad)
+            if (modulo != null) {
+                CardTareaPendiente(tarea, modulo, studyViewModel, navController)
+            }
+        }
     }
 }
+
 
 /**
  * Un composable que representa una tarjeta de tarea pendiente.
@@ -746,8 +756,8 @@ fun MyLazyColumn(
 fun CardTareaPendiente(
     tarea: Tarea,
     modulo: Modulo,
-    //study2ViewModel: Study2ViewModel,
-    //navController: NavController,
+    studyViewModel: StudyViewModel,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     var expandir by rememberSaveable { mutableStateOf(false) }
@@ -809,8 +819,7 @@ fun CardTareaPendiente(
                             .padding(start = 10.dp)
                     )
                     Text(
-                        //text = study2ViewModel.calcularTiempoRestanteConMinutos(tarea.fechaVencimiento),
-                        text = "fecha vencimiento tarea",
+                        text = studyViewModel.calcularTiempoRestanteConMinutos(tarea.fechaVencimiento),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Light,
                         modifier = Modifier
@@ -844,10 +853,10 @@ fun CardTareaPendiente(
                     }
                     Button(
                         onClick = {
-//                            val tareaConModulo =
-//                                tarea.copy(modulo = modulo) // Asegura que la tarea tenga su módulo asignado
-//                            study2ViewModel.marcarTareaComoCompletada(tareaConModulo)
-//                            expandir = false
+                            val tareaConModulo =
+                                tarea.copy(moduloId = modulo.id) // Asegura que la tarea tenga su módulo asignado
+                            studyViewModel.terminarTarea(tareaConModulo)
+                            expandir = false
                         },
                         modifier = Modifier
                             .width(150.dp)
@@ -1139,9 +1148,12 @@ fun NotificacionAnimada() {
 @Composable
 fun MyTopAppBarCenterImage(
     drawerState: DrawerState,//Crear el parámetro de estado Drawer
-    navController: NavController
+    navController: NavController,
+    //activity: Activity? = null
 ) {
     //val activity = (LocalContext.current as? Activity)
+    // Obtenemos la Activity desde el CompositionLocal
+    val activity = LocalActivity.current
     val corutina = rememberCoroutineScope()
     var expandirOpciones by remember { mutableStateOf(false) }
 
@@ -1215,8 +1227,8 @@ fun MyTopAppBarCenterImage(
                     DropdownMenuItem(
                         text = { Text("Salir") },
                         onClick = {
-//                            expandirOpciones = false
-//                            activity?.finishAffinity()//Cerrar aplicación
+                            expandirOpciones = false
+                            activity?.finishAffinity()//Cerrar aplicación
                         }, // Acción al seleccionar "Settings"
                         leadingIcon = {
                             Icon(
