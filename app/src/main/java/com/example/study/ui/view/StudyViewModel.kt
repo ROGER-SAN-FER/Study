@@ -44,6 +44,14 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
         }
     }
 
+    fun eliminarModulo(modulo: Modulo) {
+        viewModelScope.launch{
+            database.modulosTareasDao().eliminarModulo(modulo)
+            val modulosList = database.modulosTareasDao().obtenerTodosModulos()
+            _modulosFlow.value = modulosList
+        }
+    }
+
     fun actualizarTarea(tarea: Tarea){
         viewModelScope.launch{
             database.modulosTareasDao().actualizarTarea(tarea)

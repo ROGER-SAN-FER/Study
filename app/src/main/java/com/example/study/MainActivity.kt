@@ -16,6 +16,7 @@ import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
 import com.example.study.ui.view.StudyViewModel
 import com.example.study.ui.view.ViewActualizarTarea
+import com.example.study.ui.view.ViewEliminarModulo
 import com.example.study.ui.view.ViewNuevaTarea
 import com.example.study.ui.view.ViewNuevoModulo
 import com.example.study.ui.view.ViewPrincipal
@@ -68,7 +69,7 @@ fun Study(/*database: ModulosDatabase*/) {
         composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController, studyViewModel) }
         composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, studyViewModel) }
 //        composable(Routes.ViewDashboard.route) { ViewDashboard() }
-//        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(study2ViewModel) }
+        composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(studyViewModel) }
         composable(
             route = "ViewActualizarTarea/{moduloId}/{tareaId}", // Ruta con parámetros
             arguments = listOf(

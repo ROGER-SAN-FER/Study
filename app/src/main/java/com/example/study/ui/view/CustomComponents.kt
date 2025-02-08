@@ -994,15 +994,14 @@ fun MyModalDrawer(
                                 coroutineScope.launch {
                                     when (item.second) {
                                         "Nuevo Módulo" -> navController.navigate("ViewNuevoModulo")
-//                                        "Eliminar Módulo" -> navController.navigate("ViewEliminarModulo")
+                                        "Eliminar Módulo" -> navController.navigate("ViewEliminarModulo")
                                         "Nueva Tarea" -> navController.navigate("ViewNuevaTarea")
                                         "Tareas Pendientes" -> navController.navigate("ViewTareasPendientes")
 //                                        "Dashboard" -> navController.navigate("ViewDashboard")
-//                                        //"Prueba" -> navController.navigate("Prueba")
                                     }
-//                                    drawerState.apply {
-//                                        if (isClosed) open() else close()
-//                                    }
+                                    drawerState.apply {
+                                        if (isClosed) open() else close()
+                                    }
                                 }
                             }
                         )//NavigationDrawerItem
