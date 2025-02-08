@@ -997,7 +997,7 @@ fun MyModalDrawer(
                                         "Eliminar Módulo" -> navController.navigate("ViewEliminarModulo")
                                         "Nueva Tarea" -> navController.navigate("ViewNuevaTarea")
                                         "Tareas Pendientes" -> navController.navigate("ViewTareasPendientes")
-//                                        "Dashboard" -> navController.navigate("ViewDashboard")
+                                        "Dashboard" -> navController.navigate("ViewDashboard")
                                     }
                                     drawerState.apply {
                                         if (isClosed) open() else close()

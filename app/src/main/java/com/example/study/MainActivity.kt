@@ -16,6 +16,7 @@ import com.example.study.ui.theme.StudyTheme
 import com.example.study.ui.view.Routes
 import com.example.study.ui.view.StudyViewModel
 import com.example.study.ui.view.ViewActualizarTarea
+import com.example.study.ui.view.ViewDashboard
 import com.example.study.ui.view.ViewEliminarModulo
 import com.example.study.ui.view.ViewNuevaTarea
 import com.example.study.ui.view.ViewNuevoModulo
@@ -25,12 +26,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    //private lateinit var database: ModulosDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         setContent {
-            //database = ModulosDatabase.getDatabase(this)
             // Proveemos la Activity a toda la jerarquía de Compose
             CompositionLocalProvider(LocalActivity provides this) {
                 StudyTheme {
@@ -48,8 +47,7 @@ class MainActivity : ComponentActivity() {
  * @param study2ViewModel El ViewModel que proporciona los datos a las diferentes pantallas.
  */
 @Composable
-fun Study(/*database: ModulosDatabase*/) {
-    //val context = LocalContext.current
+fun Study() {
     val navController = rememberNavController()
     val studyViewModel: StudyViewModel = hiltViewModel()
 
@@ -68,7 +66,7 @@ fun Study(/*database: ModulosDatabase*/) {
         }
         composable(Routes.ViewNuevoModulo.route) { ViewNuevoModulo(navController, studyViewModel) }
         composable(Routes.ViewNuevaTarea.route) { ViewNuevaTarea(navController, studyViewModel) }
-//        composable(Routes.ViewDashboard.route) { ViewDashboard() }
+        composable(Routes.ViewDashboard.route) { ViewDashboard() }
         composable(Routes.ViewEliminarModulo.route) { ViewEliminarModulo(studyViewModel) }
         composable(
             route = "ViewActualizarTarea/{moduloId}/{tareaId}", // Ruta con parámetros
