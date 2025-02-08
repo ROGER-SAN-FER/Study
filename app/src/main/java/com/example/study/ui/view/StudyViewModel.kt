@@ -44,6 +44,12 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
         }
     }
 
+    fun actualizarTarea(tarea: Tarea){
+        viewModelScope.launch{
+            database.modulosTareasDao().actualizarTarea(tarea)
+        }
+    }
+
     fun terminarTarea(tarea: Tarea){
         viewModelScope.launch{
             val tareaCompletada = tarea.copy(completado = true)

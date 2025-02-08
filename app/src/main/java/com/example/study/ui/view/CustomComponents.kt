@@ -843,9 +843,9 @@ fun CardTareaPendiente(
                 ) {
                     Button(
                         onClick = {
-                            //navController.navigate(
-                            //    "ViewActualizarTarea/${modulo.id}/${tarea.id}" // Navega con los IDs necesarios
-                            //)
+                            navController.navigate(
+                                "ViewActualizarTarea/${modulo.id}/${tarea.id}" // Navega con los IDs necesarios
+                            )
                         },
                         modifier = Modifier.width(150.dp)
                     ) {

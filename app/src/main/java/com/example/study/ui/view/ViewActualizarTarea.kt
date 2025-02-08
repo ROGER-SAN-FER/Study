@@ -39,7 +39,7 @@ import kotlin.text.orEmpty
  * @param moduloId Identificador del módulo al que pertenece la tarea.
  * @param tareaId Identificador único de la tarea que se desea actualizar.
  */
-@androidx.compose.runtime.Composable
+@Composable
 fun ViewActualizarTarea(
     navController: NavHostController,
     studyViewModel: StudyViewModel,
@@ -147,7 +147,7 @@ fun ViewActualizarTarea(
                                 // esa lógica también.
                             )
                             // Llamamos al método de actualización en el ViewModel
-                            studyViewModel.terminarTarea(tareaActualizada)
+                            studyViewModel.actualizarTarea(tareaActualizada)
                         }
                         // Navegamos de vuelta a la lista de tareas
                         navController.navigate("ViewTareasPendientes")
