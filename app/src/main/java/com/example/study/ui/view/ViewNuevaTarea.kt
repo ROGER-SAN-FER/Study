@@ -111,7 +111,7 @@ fun ViewNuevaTarea(
                     icono = Icons.Rounded.Create,
                     modifier = Modifier
                         .padding(bottom = 28.dp)
-                        .width(300.dp)
+                        .width(320.dp)
                 )
 
                 InsertarTextFieldCalendario(
@@ -130,7 +130,7 @@ fun ViewNuevaTarea(
                     icono = Icons.Rounded.Menu,
                     modifier = Modifier
                         .padding(bottom = 28.dp)
-                        .width(300.dp)
+                        .width(320.dp)
                 )
 
                 InsertarBotonElevadoIcono(

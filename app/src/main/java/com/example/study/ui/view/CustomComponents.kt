@@ -378,7 +378,7 @@ fun InsertarTextFieldCalendario(
                 disabledPlaceholderColor = MaterialTheme.colorScheme.onSurface
             ),
             modifier = Modifier
-                .width(300.dp)
+                .width(320.dp)
                 .padding(bottom = 28.dp)
                 .focusable(false)
                 .align(Alignment.Center)
@@ -411,7 +411,7 @@ fun MyExposedDropDownMenuParaNuevaTarea(
         TextField(
             modifier = Modifier
                 .menuAnchor()
-                .width(300.dp),
+                .width(320.dp),
             readOnly = true,
             value = selectedModuloText,
             onValueChange = {},
@@ -787,10 +787,10 @@ fun CardTareaPendiente(
                         .weight(4f)
                 ) {
                     Text(
-                        text = modulo.nombre,// Falta implementar
+                        text = modulo.nombre,
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp,
+                        fontSize = 24.sp,
                         modifier = Modifier
                             .padding(start = 10.dp)
                     )
@@ -838,7 +838,7 @@ fun CardTareaPendiente(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
+                        .padding(vertical = 16.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
@@ -847,7 +847,7 @@ fun CardTareaPendiente(
                                 "ViewActualizarTarea/${modulo.id}/${tarea.id}" // Navega con los IDs necesarios
                             )
                         },
-                        modifier = Modifier.width(150.dp)
+                        modifier = Modifier.width(180.dp)
                     ) {
                         Text(text = "Actualizar")
                     }
@@ -859,7 +859,7 @@ fun CardTareaPendiente(
                             expandir = false
                         },
                         modifier = Modifier
-                            .width(150.dp)
+                            .width(180.dp)
                     ) {
                         Text(
                             text = "Terminar tarea"

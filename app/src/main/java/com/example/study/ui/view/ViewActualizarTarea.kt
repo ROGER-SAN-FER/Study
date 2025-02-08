@@ -1,5 +1,6 @@
 package com.example.study.ui.view
 
+//import kotlin.Long.equals
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,13 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.study.data.local.entity.Modulo
-import com.example.study.data.local.entity.Tarea
 import com.example.study.ui.theme.StudyTheme
-//import kotlin.Long.equals
 import kotlin.collections.find
 import kotlin.let
-import kotlin.text.orEmpty
 
 /**
  * Pantalla para actualizar una tarea existente en la aplicación.
@@ -93,7 +89,7 @@ fun ViewActualizarTarea(
                     label = "Tarea",
                     placeHolder = "Tarea",
                     icono = Icons.Rounded.Create,
-                    modifier = Modifier.padding(bottom = 28.dp)
+                    modifier = Modifier.padding(bottom = 28.dp).width(320.dp)
                 )
 
                 InsertarTextFieldCalendario(
@@ -109,31 +105,9 @@ fun ViewActualizarTarea(
                     label = "Detalles",
                     placeHolder = "Detalles",
                     icono = Icons.Rounded.Menu,
-                    modifier = Modifier.padding(bottom = 28.dp)
+                    modifier = Modifier.padding(bottom = 28.dp).width(320.dp)
                 )
 
-                // Botón para actualizar la tarea
-                /*ElevatedButton(
-                    onClick = {
-                        tareaSeleccionada?.let { tarea ->
-                            val moduloAsociado = modulos.find { Modulo.id equals moduloId }
-                            com.example.study2.ui.viewmodel.Study2ViewModel.actualizarTarea(
-                                com.example.study2.model.Tarea(
-                                    com.example.study2.model.Tarea.nombreTarea = nombreTarea,
-                                    fechaVencimiento = fechaVencimiento,
-                                    detalles = detalles,
-                                    modulo = moduloAsociado!!
-                                )
-                            )
-                        }
-                        navController.navigate("ViewTareasPendientes")
-                    },
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(48.dp)
-                ) {
-                    Text("ACTUALIZAR", color = Color.Black)
-                }*/
                 ElevatedButton(
                     onClick = {
                         // Solo si existe la tareaSeleccionada
