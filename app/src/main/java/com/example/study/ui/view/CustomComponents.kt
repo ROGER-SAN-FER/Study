@@ -231,6 +231,7 @@ fun MyExposedDropDownMenuParaEliminarModulo(
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
+                HorizontalDivider(modifier = Modifier.padding(12.dp))
             }
         }
     }
@@ -440,6 +441,7 @@ fun MyExposedDropDownMenuParaNuevaTarea(
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                 )
+                HorizontalDivider(modifier = Modifier.padding(12.dp))
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.study.ui.view
 
+//import androidx.hilt.navigation.compose.hiltViewModel
+//import com.example.study2.ui.theme.StudyTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,18 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-//import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import androidx.room.DatabaseConfiguration
-import androidx.room.InvalidationTracker
-import androidx.sqlite.db.SupportSQLiteOpenHelper
-import com.example.study.data.local.ModulosDatabase
-import com.example.study.data.local.dao.ModulosTareasDao
 import com.example.study.data.local.entity.Modulo
-import com.example.study.data.local.entity.Tarea
 import com.example.study.ui.theme.StudyTheme
-//import com.example.study2.ui.theme.StudyTheme
 import kotlin.text.isNotEmpty
 import kotlin.text.toIntOrNull
 
@@ -147,12 +141,6 @@ fun ViewNuevoModulo(
                             prioridad = prioridad
                         )
                     )
-//                    Study2ViewModel.guardarModulo(
-//                        modulo,
-//                        horas,
-//                        imagen,
-//                        prioridad
-//                    )
                     navController.navigate("ViewTareasPendientes")
                 },
                 modifier = Modifier
