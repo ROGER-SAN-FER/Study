@@ -12,8 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -22,7 +20,7 @@ import java.util.TimeZone
 import javax.inject.Inject
 
 @HiltViewModel
-class StudyViewModel @Inject constructor(private val database: ModulosDatabase) :  ViewModel() {
+class StudyViewModel @Inject constructor(private val database: ModulosDatabase) : ViewModel() {
 
     // Flujos privados (mutable) y públicos (inmutables)
     private val _modulosFlow = MutableStateFlow<List<Modulo>>(emptyList())
@@ -45,45 +43,45 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
     }
 
     fun eliminarModulo(modulo: Modulo) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             database.modulosTareasDao().eliminarModulo(modulo)
             val modulosList = database.modulosTareasDao().obtenerTodosModulos()
             _modulosFlow.value = modulosList
         }
     }
 
-    fun actualizarTarea(tarea: Tarea){
-        viewModelScope.launch{
+    fun actualizarTarea(tarea: Tarea) {
+        viewModelScope.launch {
             database.modulosTareasDao().actualizarTarea(tarea)
             val tareasList = database.modulosTareasDao().obtenerTodasTareas()
             _tareasFlow.value = tareasList
         }
     }
 
-    fun terminarTarea(tarea: Tarea){
-        viewModelScope.launch{
+    fun terminarTarea(tarea: Tarea) {
+        viewModelScope.launch {
             val tareaCompletada = tarea.copy(completado = true)
             database.modulosTareasDao().actualizarTarea(tareaCompletada)
             cargarTareas()
         }
     }
 
-    fun cargarTareas(){
-        viewModelScope.launch{
+    fun cargarTareas() {
+        viewModelScope.launch {
             val tareasList = database.modulosTareasDao().obtenerTodasTareas()
             _tareasFlow.value = tareasList
         }
     }
 
-    fun cargarModulos(){
-        viewModelScope.launch{
+    fun cargarModulos() {
+        viewModelScope.launch {
             val modulosList = database.modulosTareasDao().obtenerTodosModulos()
             _modulosFlow.value = modulosList
         }
     }
 
     fun insertarModulo(modulo: Modulo) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             database.modulosTareasDao().insertarModulo(modulo)
             // Una vez insertado, puedes refrescar la lista si quieres
             val modulosList = database.modulosTareasDao().obtenerTodosModulos()
@@ -91,8 +89,8 @@ class StudyViewModel @Inject constructor(private val database: ModulosDatabase) 
         }
     }
 
-    fun insertarTarea(tarea: Tarea){
-        viewModelScope.launch{
+    fun insertarTarea(tarea: Tarea) {
+        viewModelScope.launch {
             database.modulosTareasDao().insertarTarea(tarea)
             // Una vez insertado, refrescamos también la lista de tareas
             val tareasList = database.modulosTareasDao().obtenerTodasTareas()
